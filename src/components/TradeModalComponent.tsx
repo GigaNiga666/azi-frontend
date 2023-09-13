@@ -1,6 +1,6 @@
 import React, {FC, useRef} from 'react';
 import {GameStates} from "../types/GameStates";
-import {Timer} from "./Timer";
+import {Direction, Range} from "react-range";
 
 interface TradeModalComponentProps {
     minRaise : number,
@@ -33,18 +33,54 @@ const TradeModalComponent: FC<TradeModalComponentProps> = ({descBet, canCallBet,
 
         <div className={`tradeModal ${active ? 'tradeModal--active' : ''}`}>
             <div className='tradeModal__window'>
-                {canUpBet ? <div className='tradeModal__input'>
-                        <input
-                        type="range" min={inputMinValue}
-                        step={step} ref={input}
-                        max={maxRaise} value={inputValue}
-                        onInput={(e) => {
-                            setInputValue(+e.currentTarget.value)
-                            const percent = (+e.currentTarget.value - inputMinValue) / (maxRaise - inputMinValue) * 100
-                            e.currentTarget.style.background = `linear-gradient(90deg, rgba(0,0,0,0) ${percent}%, #0B0B0E ${percent}%), linear-gradient(270deg, #FF6B00 -0.09%, rgba(255, 107, 0, 0.00) 100.12%), linear-gradient(180deg, #EBC57A -157.14%, #E29A0C 309.52%)`
-                        }}
+                {/*{canUpBet ? <div className='tradeModal__input'>*/}
+                {/*        <input*/}
+                {/*        type="range" min={inputMinValue}*/}
+                {/*        step={step} ref={input}*/}
+                {/*        max={maxRaise} value={inputValue}*/}
+                {/*        onInput={(e) => {*/}
+                {/*            setInputValue(+e.currentTarget.value)*/}
+                {/*            const percent = (+e.currentTarget.value - inputMinValue) / (maxRaise - inputMinValue) * 100*/}
+                {/*            e.currentTarget.style.background = `linear-gradient(90deg, rgba(0,0,0,0) ${percent}%, #0B0B0E ${percent}%), linear-gradient(270deg, #FF6B00 -0.09%, rgba(255, 107, 0, 0.00) 100.12%), linear-gradient(180deg, #EBC57A -157.14%, #E29A0C 309.52%)`*/}
+                {/*        }}*/}
+                {/*    />*/}
+                {/*</div> : null}*/}
+                <div className="tradeModal__input">
+                    <Range
+                        values={[inputValue]}
+                        onChange={([values]) => setInputValue(values)}
+                        min={minRaise}
+                        max={maxRaise}
+                        direction={Direction.Up}
+                        renderTrack={({ props, children }) => (
+                            <div
+                                {...props}
+                                style={{
+                                    ...props.style,
+                                    height: '177px',
+                                    width: '8px',
+                                    borderRadius: '17px',
+                                    backgroundColor: '#0B0B0E'
+                                }}
+                            >
+                                {children}
+                            </div>
+                        )}
+                        renderThumb={({ props }) => (
+                            <div
+                                {...props}
+                                style={{
+                                    ...props.style,
+                                    height: '22px',
+                                    width: '22px',
+                                    background: 'linear-gradient(180deg, #EBC57A -64.94%, #E29A0C 140.8%), #FFF',
+                                    borderRadius: '50%'
+                                }}
+                            />
+                        )}
                     />
-                </div> : null}
+                </div>
+
                 <div className='tradeModal__buttons'>
                     <button onClick={() => click(0, 'pass')} className='tradeModal__btn tradeModal__btn--red'>Сбросить</button>
                     {

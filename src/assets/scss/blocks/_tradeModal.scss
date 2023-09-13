@@ -53,54 +53,15 @@
 }
 
 .tradeModal__input {
-  transform: rotate(-90deg);
-  transform-origin: bottom right;
-  width: 227px;
-  height: 40px;
+  height: 227px;
+  width: 40px;
   position: absolute;
   right: 30px;
-  bottom: 60%;
+  bottom: 150px;
   background-color: #121317;
   border-radius: 20px;
   border: 0.836px #EBC57A solid;
   display: flex;
   justify-content: center;
   align-items: center;
-
-
-  input {
-    border-radius: 17px;
-    width: 177px;
-    -webkit-appearance: none;
-    background-color: #0B0B0E;
-  }
-
-  input::-webkit-slider-runnable-track {
-    height: 8px;
-  }
-
-  input::-moz-range-track {
-    height: 8px;
-  }
-
-  input::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    background: linear-gradient(180deg, #EBC57A -64.94%, #E29A0C 140.8%), #FFF;
-    height: 22px;
-    width: 22px;
-    border-radius: 50%;
-    margin-top: calc((8px / 2) - (22px / 2));
-    position: relative;
-    z-index: 5;
-  }
-
-  input::-moz-range-thumb {
-    border: none;
-    background: linear-gradient(180deg, #EBC57A -64.94%, #E29A0C 140.8%), #FFF;
-    height: 22px;
-    width: 22px;
-    border-radius: 50%;
-    position: relative;
-    z-index: 5;
-  }
 }

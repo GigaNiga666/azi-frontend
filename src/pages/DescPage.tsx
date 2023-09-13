@@ -1,7 +1,6 @@
 import React, {useEffect, useReducer, useState} from 'react';
 import {io, Socket} from "socket.io-client";
 import {useParams, useSearchParams} from "react-router-dom";
-import {observer} from "mobx-react-lite";
 import {Suits} from "../types/Suits";
 import coin from '../assets/images/icons/tenge.svg'
 import backCard from '../assets/images/backCard.svg'
@@ -309,4 +308,4 @@ const DescPage = () => {
 };
 
 
-export default observer(DescPage);
+export default DescPage;
