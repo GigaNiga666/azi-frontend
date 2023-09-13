@@ -31,8 +31,8 @@ const DescPage = () => {
     let step = 10
 
     const [minBet, setMinBet] = useState<number>(minBetQuery)
-    const [minRaise, setMinRaise] = useState<number>(minBet)
-    const [maxRaise, setMaxRaise] = useState<number>(minBet * 5)
+    const [minRaise, setMinRaise] = useState<number>(minBetQuery)
+    const [maxRaise, setMaxRaise] = useState<number>(minBetQuery * 5)
     const [canUpBet, setCanUpBet] = useState<boolean>(true)
     const [canCallBet, setCanCallBet] = useState<boolean>(true)
     const [descBet, setDescBet] = useState<number>(0)
@@ -50,7 +50,7 @@ const DescPage = () => {
         myMovedCard: null,
         myCoins: coins,
         trumpedCard: null,
-        isMyMove: false,
+        isMyMove: true,
         gameState: GameStates.TRADE,
         myBet: 0
     }
