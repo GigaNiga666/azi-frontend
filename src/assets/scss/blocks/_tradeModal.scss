@@ -64,4 +64,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  #thumb:focus-visible {
+    outline: none;
+  }
 }
