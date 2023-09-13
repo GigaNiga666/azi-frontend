@@ -1,0 +1,77 @@
+.myCards {
+  display: flex;
+  height: 13rem;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+
+  &__inactive {
+    transform: translate(-50%, 16px) scale(0.8);
+    filter: brightness(50%);
+    pointer-events: none;
+  }
+}
+.myCards__card {
+  width: 87px;
+  height: 128px;
+
+  &--inactive {
+    filter: brightness(50%);
+  }
+
+  img {
+    height: 100%;
+  }
+
+  /* Если карточек 3 */
+  &:nth-last-child(3):first-child {
+    z-index: 1;
+    position: relative;
+    transform: translate(35px, 24px) rotate(-15deg);
+
+    & ~ .myCards__card:nth-child(2) {
+      z-index: 2;
+      position: relative;
+      transform: translateY(14px);
+    }
+
+    & ~ .myCards__card:last-child {
+      z-index: 3;
+      position: relative;
+      transform: translate(-35px, 24px) rotate(15deg);
+    }
+  }
+
+  /* -------------------------------- */
+
+  /* Если карточек 2 */
+  &:nth-last-child(2):first-child {
+    z-index: 2;
+    position: relative;
+    transform: translate(15px, 14px) rotate(-6deg);
+
+    & ~ .myCards__card:last-child {
+      z-index: 3;
+      position: relative;
+      transform: translate(-15px, 14px) rotate(6deg);
+    }
+  }
+
+  /* -------------------------------- */
+
+  /* Если карточка 1 */
+  &:nth-last-child(1):first-child {
+    transform: translateY(14px);
+  }
+}
+
+.myMovedCard {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -65px;
+  width: 35px;
+  height: 50px;
+}

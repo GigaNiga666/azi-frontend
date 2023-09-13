@@ -1,0 +1,36 @@
+.timer {
+  position: relative;
+  height: 48px;
+  width: 48px;
+  margin: 0 auto 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(black, 0.8);
+  border-radius: 50%;
+
+  &__svg {
+    position: absolute;
+    inset: 0;
+  }
+
+  span {
+    font-weight: 700;
+    line-height: 1.6rem;
+    font-size: 1.6rem;
+  }
+}
+
+.timer__circle {
+  fill: none;
+}
+
+.timer__path-remaining {
+  fill: none;
+  transition: all 1s linear;
+  stroke-width: 8px;
+  stroke-linecap: round;
+  transform: rotate(90deg);
+  transform-origin: center;
+  stroke: url(#grad1);
+}

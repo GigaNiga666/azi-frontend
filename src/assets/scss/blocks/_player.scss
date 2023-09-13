@@ -1,0 +1,157 @@
+.player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60px;
+  height: 110px;
+  position: relative;
+  z-index: 5;
+
+  &__inactive {
+    filter: brightness(50%);
+  }
+
+  &__none {
+    width: 60px;
+    height: 110px;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__none-img {
+    margin-top: 2rem;
+    width: 48px;
+    height: 48px;
+  }
+
+  &__img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 0.2rem;
+  }
+
+  &__name {
+    text-align: center;
+    font-weight: 700;
+    line-height: 1.2rem;
+    margin-bottom: 0.2rem;
+  }
+
+  &__coins {
+    display: flex;
+    align-items: center;
+  }
+
+  &__coins-value {
+    font-weight: 400;
+    margin-right: 3px;
+  }
+
+  &__coins-icon {
+    width: 12px;
+    height: 12px;
+  }
+
+
+  &__action {
+    margin-top: 4px;
+    font-weight: 600;
+    line-height: 1.2rem;
+    text-transform: uppercase;
+    padding: 1px 6px;
+    border-radius: 2px;
+  }
+
+  &__action--raise {
+    background: #117119;
+  }
+
+  &__action--call {
+    background: #E39F18;
+  }
+
+  &__action--allIn {
+    background: #6518E3;
+  }
+
+  &__action--round {
+    background-color: #F13F17;
+  }
+
+  &__card {
+    width: 28px;
+    height: 42px;
+    position: absolute;
+    filter: drop-shadow(0px 1.6px 4px rgba(0, 0, 0, 0.35));
+  }
+
+  &__card--first {
+    transform: rotate(51deg);
+    top: 2px;
+    right: -7px;
+    z-index: -1;
+
+    &.inverse {
+      transform: rotate(-51deg);
+      left: -7px;
+      right: 0;
+    }
+  }
+
+  &__card--second {
+    transform: rotate(66deg);
+    top: 9px;
+    right: -10px;
+    z-index: -2;
+
+    &.inverse {
+      transform: rotate(-66deg);
+      left: -10px;
+      right: 0;
+    }
+  }
+  &__card--third {
+    transform: rotate(81deg);
+    top: 16px;
+    right: -10px;
+    z-index: -3;
+
+    &.inverse {
+      transform: rotate(-81deg);
+      left: -10px;
+      right: 0;
+    }
+  }
+
+  &__movedCard {
+    position: absolute;
+    width: 35px;
+    height: 50px;
+
+    &.bottom {
+      bottom: -55px;
+      right: 0;
+    }
+
+    &.bottom-right {
+      bottom: -10px;
+      right: -41px;
+    }
+
+    &.bottom-left {
+      bottom: -10px;
+      left: -41px;
+    }
+
+    &.top-right {
+      top: -30px;
+      right: -41px;
+      z-index: -3;
+    }
+    &.top-left {
+      top: -30px;
+      left: -41px;
+      z-index: -3;
+    }
+  }
+}

@@ -1,0 +1,105 @@
+.desc {
+  width: 100%;
+  height: 100vh;
+  background-color: #020902;
+  position: relative;
+  padding: 16px 9px 0;
+  z-index: 1;
+
+  &:after {
+    content: '';
+    border-radius: 350px;
+    border: 13px solid #031605;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.00) 100%), #061D0C;
+    position: absolute;
+    inset: 30px 27px 72px;
+    z-index: -1;
+  }
+}
+
+.desc__item {
+  display: flex;
+  position: relative;
+
+  &--trumped {
+    position: relative;
+    z-index: 10;
+    pointer-events: none;
+
+    img {
+      width: 56px;
+      height: 80px;
+    }
+  }
+
+  &:first-child {
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  &:nth-child(2) {
+    justify-content: space-between;
+  }
+
+  &:nth-child(3) {
+    justify-content: center;
+    height: 80px;
+  }
+
+  &:nth-child(4) {
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.bank {
+  margin-top: -10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: relative;
+  z-index: 10;
+
+  &__label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    background: linear-gradient(180deg, #EBC57A 0%, #E29A0C 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+  }
+
+  &__value {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    background: linear-gradient(180deg, #EBC57A 0%, #E29A0C 100%);
+    width: 74px;
+    height: 26px;
+    font-size: 1.2rem;
+    font-weight: 900;
+    line-height: 1.2rem;
+  }
+}
+
+.myCoins {
+  position: absolute;
+  z-index: 10;
+  bottom: 1.4rem;
+  right: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  &__value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.6rem;
+  }
+
+  &__icon {
+    width: 18px;
+    height: 18px;
+  }
+}
