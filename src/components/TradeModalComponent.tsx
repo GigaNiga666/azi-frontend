@@ -38,7 +38,7 @@ const TradeModalComponent: FC<TradeModalComponentProps> = ({descBet, canCallBet,
                         type="range" min={inputMinValue}
                         step={step} ref={input}
                         max={maxRaise} value={inputValue}
-                        onChange={(e) => {
+                        onInput={(e) => {
                             setInputValue(+e.currentTarget.value)
                             const percent = (+e.currentTarget.value - inputMinValue) / (maxRaise - inputMinValue) * 100
                             e.currentTarget.style.background = `linear-gradient(90deg, rgba(0,0,0,0) ${percent}%, #0B0B0E ${percent}%), linear-gradient(270deg, #FF6B00 -0.09%, rgba(255, 107, 0, 0.00) 100.12%), linear-gradient(180deg, #EBC57A -157.14%, #E29A0C 309.52%)`
