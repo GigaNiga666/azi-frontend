@@ -11,7 +11,6 @@ import {PlayerComponent} from "../components/PlayerComponent";
 import {CardImage} from "../ui/CardImage";
 import {GameStates} from "../types/GameStates";
 import {TradeModalComponent} from "../components/TradeModalComponent";
-import {Timer} from "../components/Timer";
 
 interface IDesc {
     players: IPlayer[],
@@ -52,7 +51,7 @@ const DescPage = () => {
         myMovedCard: null,
         myCoins: coins,
         trumpedCard: null,
-        isMyMove: true,
+        isMyMove: false,
         gameState: GameStates.TRADE,
         myBet: 0
     }
