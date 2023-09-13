@@ -51,7 +51,7 @@ const TradeModalComponent: FC<TradeModalComponentProps> = ({descBet, canCallBet,
                         onChange={([values]) => setInputValue(values)}
                         min={inputMinValue}
                         max={maxRaise}
-                        step={1}
+                        step={10}
                         direction={Direction.Up}
                         renderTrack={({props, children}) => (
                             <div
