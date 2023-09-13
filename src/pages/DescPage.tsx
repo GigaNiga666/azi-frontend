@@ -65,7 +65,7 @@ const DescPage = () => {
 
     useEffect(() => {
 
-        let socketIO = io('http://localhost:5000')
+        let socketIO = io('https://azi-backend.onrender.com')
 
         setSocket(socketIO)
 
