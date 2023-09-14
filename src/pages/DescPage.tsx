@@ -59,8 +59,6 @@ const DescPage = () => {
 
     window.scrollTo(0, document.body.scrollHeight);
 
-
-
     useEffect(() => {
 
         let socketIO = io('https://azi-backend.onrender.com')
@@ -267,9 +265,12 @@ const DescPage = () => {
                 <PlayerComponent inverse={true} position={'top-left'} player={desc.players[4]}/>
             </div>
 
-            <div className="myCoins">
-                <span className="myCoins__value">{desc.myCoins}</span>
-                <img className="myCoins__icon" src={coin} alt=""/>
+            <div className="roomInfo">
+                <span className="roomInfo__id">#{sessionId}</span>
+                <div className="myCoins">
+                    <span className="myCoins__value">{desc.myCoins}</span>
+                    <img className="myCoins__icon" src={coin} alt=""/>
+                </div>
             </div>
 
             <div

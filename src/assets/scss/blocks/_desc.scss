@@ -84,11 +84,25 @@
   }
 }
 
-.myCoins {
+.roomInfo {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  align-items: center;
   position: absolute;
   z-index: 10;
   bottom: 1.4rem;
-  right: 1.6rem;
+  left: 0;
+  right: 0;
+
+  &__id {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.6rem;
+  }
+}
+
+.myCoins {
   display: flex;
   align-items: center;
   gap: 4px;
