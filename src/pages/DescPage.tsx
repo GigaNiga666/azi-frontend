@@ -62,7 +62,6 @@ const DescPage = () => {
     window.scrollTo(0, document.body.scrollHeight);
 
     useEffect(() => {
-
         let socketIO = io('https://azi-backend.onrender.com')
 
         setSocket(socketIO)
@@ -88,6 +87,14 @@ const DescPage = () => {
         socketIO.on('playerLeave', (players : IPlayer[]) => {
             initPlayers(players)
         })
+
+
+        tg.onEvent('viewportChanged', () => {
+            if (!tg.isExpanded) tg.expand()
+        })
+
+        tg.ready()
+        tg.expand()
 
 
         return () => {
