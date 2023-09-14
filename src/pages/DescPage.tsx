@@ -60,6 +60,9 @@ const DescPage = () => {
         initValues
     );
 
+    window.scrollTo(0, document.body.scrollHeight);
+
+
 
     useEffect(() => {
 
@@ -88,6 +91,7 @@ const DescPage = () => {
         socketIO.on('playerLeave', (players : IPlayer[]) => {
             initPlayers(players)
         })
+
 
         return () => {
             socketIO.disconnect()

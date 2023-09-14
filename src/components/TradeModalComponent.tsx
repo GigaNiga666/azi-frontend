@@ -75,9 +75,17 @@ const TradeModalComponent: FC<TradeModalComponentProps> = ({descBet, canCallBet,
                                     ...props.style,
                                     height: '44px',
                                     width: '44px',
+                                    display:'flex',
+                                    justifyContent:'center',
+                                    alignItems:'center'
+                                }}
+                                children={
+                                    <div style={{
+                                    height: '22px',
+                                    width: '22px',
                                     background: 'linear-gradient(180deg, #EBC57A -64.94%, #E29A0C 140.8%), #FFF',
                                     borderRadius: '50%',
-                                }}
+                                }} />}
                             />
                         )}
                     />
