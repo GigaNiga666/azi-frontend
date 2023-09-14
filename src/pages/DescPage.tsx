@@ -22,6 +22,8 @@ interface IDesc {
     myBet: number
 }
 
+const tg = Telegram.WebApp
+
 const DescPage = () => {
     const [searchParams] = useSearchParams()
     const sessionId = useParams().id
@@ -47,7 +49,7 @@ const DescPage = () => {
         myMovedCard: null,
         myCoins: coins,
         trumpedCard: null,
-        isMyMove: true,
+        isMyMove: false,
         gameState: GameStates.TRADE,
         myBet: 0
     }
@@ -65,7 +67,7 @@ const DescPage = () => {
 
         setSocket(socketIO)
 
-        socketIO.emit('playerConnect', sessionId, username, coins, minBetQuery)
+        socketIO.emit('playerConnect', sessionId, username, coins, minBetQuery, tg.initDataUnsafe.query_id)
 
         socketIO.on('error', error => console.log(error))
 
