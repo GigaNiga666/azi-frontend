@@ -36,9 +36,6 @@ const DescPage = () => {
     const [canUpBet, setCanUpBet] = useState<boolean>(true)
     const [canCallBet, setCanCallBet] = useState<boolean>(true)
     const [descBet, setDescBet] = useState<number>(0)
-
-    const [startTimer, setStartTimer] = useState<() => void | null>()
-
     const [inputValue, setInputValue] = useState<number>(minBetQuery)
 
     const [socket, setSocket] = useState<Socket | null>(null)

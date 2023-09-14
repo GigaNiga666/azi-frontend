@@ -5,6 +5,7 @@
   position: relative;
   padding: 16px 9px 0;
   z-index: 1;
+  overflow: hidden;
 
   &:after {
     content: '';
