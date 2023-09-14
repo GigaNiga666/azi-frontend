@@ -73,8 +73,8 @@ const TradeModalComponent: FC<TradeModalComponentProps> = ({descBet, canCallBet,
                                 {...props}
                                 style={{
                                     ...props.style,
-                                    height: '22px',
-                                    width: '22px',
+                                    height: '44px',
+                                    width: '44px',
                                     background: 'linear-gradient(180deg, #EBC57A -64.94%, #E29A0C 140.8%), #FFF',
                                     borderRadius: '50%',
                                 }}
