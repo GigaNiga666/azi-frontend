@@ -280,7 +280,7 @@ const DescPage = () => {
                     <span className="myCoins__value">{desc.myCoins}</span>
                     <img className="myCoins__icon" src={coin} alt=""/>
                 </div>
-                <span>{socket?.id}</span>
+                <span style={{color: 'white'}}>{socket?.id}</span>
             </div>
 
             <div
