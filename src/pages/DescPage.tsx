@@ -212,8 +212,9 @@ const DescPage = () => {
         let sortedPlayers: IPlayer[] = [];
 
         players.forEach((player, index) => {
-            if (player.username === username)
+            if (player.id === socket?.id) {
                 sortedPlayers = [...players.slice(index + 1), ...players.slice(0, index)]
+            }
         })
 
         const me = players.filter(player => player.id === socket?.id)[0]
