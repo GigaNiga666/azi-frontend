@@ -67,7 +67,8 @@ const DescPage = () => {
         let socketIO = io('https://azi-backend.onrender.com')
 
         setSocket(socketIO)
-        setId(socketIO.id)
+
+        socketIO.on('connect', () => setId(socketIO.id))
 
         socketIO.emit('playerConnect', sessionId, username, coins, minBetQuery, tg.initDataUnsafe.query_id)
 
