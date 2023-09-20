@@ -3,7 +3,7 @@ import {ICard} from "./Card";
 export interface IPlayer {
     username : string,
     coins : number,
-    id : number,
+    id : string,
     cards : ICard[],
     movedCard : ICard,
     move : boolean,

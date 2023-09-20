@@ -66,8 +66,6 @@ const DescPage = () => {
 
         setSocket(socketIO)
 
-        socketIO.on('connect', () => console.log(socketIO.id))
-
         socketIO.emit('playerConnect', sessionId, username, coins, minBetQuery, tg.initDataUnsafe.query_id)
 
         socketIO.on('error', error => console.log(error))
@@ -218,7 +216,7 @@ const DescPage = () => {
                 sortedPlayers = [...players.slice(index + 1), ...players.slice(0, index)]
         })
 
-        const me = players.filter(player => player.username === username)[0]
+        const me = players.filter(player => player.id === socket?.id)[0]
         updateDesc({isMyMove: me.move, players: sortedPlayers, myCoins: me.coins, myBet: me.bet, myCards: me.cards})
         return me
     }
