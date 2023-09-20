@@ -66,6 +66,8 @@ const DescPage = () => {
 
         setSocket(socketIO)
 
+        socketIO.on('connect', () => console.log(socketIO.id))
+
         socketIO.emit('playerConnect', sessionId, username, coins, minBetQuery, tg.initDataUnsafe.query_id)
 
         socketIO.on('error', error => console.log(error))
