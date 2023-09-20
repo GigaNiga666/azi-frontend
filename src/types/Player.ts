@@ -10,5 +10,6 @@ export interface IPlayer {
     active : boolean,
     payoff : number,
     bet : number,
-    action : string
+    action : string,
+    queryId : string
 }
