@@ -41,6 +41,8 @@ const DescPage = () => {
     const [inputValue, setInputValue] = useState<number>(minBetQuery)
 
     const [socket, setSocket] = useState<Socket | null>(null)
+    const [id, setId] = useState<string>('')
+
     const [bank, setBank] = useState<number>(0)
 
     const initValues: IDesc = {
@@ -65,6 +67,7 @@ const DescPage = () => {
         let socketIO = io('https://azi-backend.onrender.com')
 
         setSocket(socketIO)
+        setId(socketIO.id)
 
         socketIO.emit('playerConnect', sessionId, username, coins, minBetQuery, tg.initDataUnsafe.query_id)
 
@@ -212,12 +215,12 @@ const DescPage = () => {
         let sortedPlayers: IPlayer[] = [];
 
         players.forEach((player, index) => {
-            if (player.id === socket?.id) {
+            if (player.id === id) {
                 sortedPlayers = [...players.slice(index + 1), ...players.slice(0, index)]
             }
         })
 
-        const me = players.filter(player => player.id === socket?.id)[0]
+        const me = players.filter(player => player.id === id)[0]
         updateDesc({isMyMove: me.move, players: sortedPlayers, myCoins: me.coins, myBet: me.bet, myCards: me.cards})
         return me
     }
@@ -281,7 +284,7 @@ const DescPage = () => {
                     <span className="myCoins__value">{desc.myCoins}</span>
                     <img className="myCoins__icon" src={coin} alt=""/>
                 </div>
-                <span className="roomInfo__id">{socket?.id}</span>
+                <span className="roomInfo__id">{id}</span>
             </div>
 
             <div
