@@ -72,7 +72,28 @@ const DescPage = () => {
 
     useEffect(() => {
         let socketIO = io('https://azi-backend.onrender.com')
+
         socketIO.emit('playerConnect', sessionId, username, coins, minBetQuery, tg.initDataUnsafe.query_id)
+
+        socketIO.on('error', error => console.log(error))
+
+        socketIO.on('newPlayerJoin', newPlayerJoinHandler)
+
+        socketIO.on('cardHandout', cardHandoutHandler)
+
+        socketIO.on('bet', betHandler)
+
+        socketIO.on('tradeEnd', tradeEndHandler)
+
+        socketIO.on('blindTradeEnd', blindTradeEndHandler)
+
+        socketIO.on('move', moveHandler)
+
+        socketIO.on('roundEnd', roundEndHandler)
+
+        socketIO.on('playerLeave', (players : IPlayer[]) => {
+            initPlayers(players)
+        })
 
         setSocket(socketIO)
 
@@ -90,30 +111,6 @@ const DescPage = () => {
 
     }, [])
 
-    useEffect(() => {
-        if (socket) {
-
-            socket.on('error', error => console.log(error))
-
-            socket.on('newPlayerJoin', newPlayerJoinHandler)
-
-            socket.on('cardHandout', cardHandoutHandler)
-
-            socket.on('bet', betHandler)
-
-            socket.on('tradeEnd', tradeEndHandler)
-
-            socket.on('blindTradeEnd', blindTradeEndHandler)
-
-            socket.on('move', moveHandler)
-
-            socket.on('roundEnd', roundEndHandler)
-
-            socket.on('playerLeave', (players : IPlayer[]) => {
-                initPlayers(players)
-            })
-        }
-    }, [restartTimer, stopTimer])
 
     function blindTradeEndHandler(players: IPlayer[], bank: number, descBet : number) {
         const me = initPlayers(players)
