@@ -99,6 +99,13 @@
     font-size: 1.6rem;
     font-weight: 700;
     line-height: 1.6rem;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 20;
+    background: linear-gradient(180deg, #EBC57A 0%, #E29A0C 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 }
 
@@ -116,5 +123,30 @@
   &__icon {
     width: 18px;
     height: 18px;
+  }
+}
+
+.myAction {
+  padding: 10px;
+  font-weight: 600;
+  line-height: 1.2rem;
+  text-transform: uppercase;
+  padding: 1px 6px;
+  border-radius: 2px;
+
+  &--raise {
+    background: #117119;
+  }
+
+  &--call {
+    background: #E39F18;
+  }
+
+  &--allIn {
+    background: #6518E3;
+  }
+
+  &--round {
+    background-color: #F13F17;
   }
 }

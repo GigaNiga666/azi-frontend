@@ -19,7 +19,8 @@ interface IDesc {
     trumpedCard: ICard | null,
     isMyMove: boolean,
     gameState: GameStates,
-    myBet: number
+    myBet: number,
+    myAction: string
 }
 
 const tg = Telegram.WebApp
@@ -53,7 +54,8 @@ const DescPage = () => {
         trumpedCard: null,
         isMyMove: false,
         gameState: GameStates.TRADE,
-        myBet: 0
+        myBet: 0,
+        myAction: ''
     }
 
     const [desc, updateDesc] = useReducer(
@@ -220,7 +222,8 @@ const DescPage = () => {
         })
 
         const me = players.filter(player => queryId === player.queryId)[0]
-        updateDesc({isMyMove: me.move, players: sortedPlayers, myCoins: me.coins, myBet: me.bet, myCards: me.cards})
+
+        updateDesc({isMyMove: me.move, players: sortedPlayers, myCoins: me.coins, myBet: me.bet, myCards: me.cards, myAction : me.action})
         return me
     }
 
@@ -253,71 +256,78 @@ const DescPage = () => {
     }
 
     return (
-        <div className='desc'>
-            <div className="desc__item">
-                <PlayerComponent position={'bottom'} player={desc.players[2]}/>
-            </div>
-            <div className="desc__item">
-                <PlayerComponent position={'bottom-right'} player={desc.players[1]}/>
-                <PlayerComponent inverse={true} position={'bottom-left'} player={desc.players[3]}/>
-            </div>
-            <div className="desc__item desc__item--trumped">
-                {desc.gameState === GameStates.BLINDTRADE ? <img src={backCard} alt=""/> :
-                    <CardImage card={desc.trumpedCard}/>}
-            </div>
-            <div className="desc__item">
-                <PlayerComponent position={'top-right'} player={desc.players[0]}/>
-                <div className="bank">
-                    <div className="bank__label">Банк</div>
-                    <div className="bank__value">{bank}</div>
+        <>
+            <span className="roomInfo__id">#{sessionId}</span>
+            <div className='desc'>
+                <div className="desc__item">
+                    <PlayerComponent position={'bottom'} player={desc.players[2]}/>
                 </div>
-                <div className="myMovedCard">
-                    <CardImage card={desc.myMovedCard}/>
+                <div className="desc__item">
+                    <PlayerComponent position={'bottom-right'} player={desc.players[1]}/>
+                    <PlayerComponent inverse={true} position={'bottom-left'} player={desc.players[3]}/>
                 </div>
-                <PlayerComponent inverse={true} position={'top-left'} player={desc.players[4]}/>
-            </div>
-
-            <div className="roomInfo">
-                <span className="roomInfo__id">#{sessionId}</span>
-                <div className="myCoins">
-                    <span className="myCoins__value">{desc.myCoins}</span>
-                    <img className="myCoins__icon" src={coin} alt=""/>
+                <div className="desc__item desc__item--trumped">
+                    {desc.gameState === GameStates.BLINDTRADE ? <img src={backCard} alt=""/> :
+                        <CardImage card={desc.trumpedCard}/>}
                 </div>
-            </div>
+                <div className="desc__item">
+                    <PlayerComponent position={'top-right'} player={desc.players[0]}/>
+                    <div className="bank">
+                        <div className="bank__label">Банк</div>
+                        <div className="bank__value">{bank}</div>
+                    </div>
+                    <div className="myMovedCard">
+                        <CardImage card={desc.myMovedCard}/>
+                    </div>
+                    <PlayerComponent inverse={true} position={'top-left'} player={desc.players[4]}/>
+                </div>
 
-            <div
-                className={`myCards ${((desc.gameState === GameStates.TRADE || desc.gameState === GameStates.BLINDTRADE) && desc.isMyMove) || (desc.gameState === GameStates.ROUND && !desc.isMyMove) ? 'myCards__inactive' : ''}`}>
-                {
-                    desc.myCards?.map((card: ICard) =>
-                        <div
-                            className={`myCards__card ${!card.canMove ? 'myCards__card--inactive' : ''}`}
-                            key={card.suit + card.value}
-                            onClick={desc.gameState === GameStates.TRADE || desc.gameState === GameStates.BLINDTRADE || !card.canMove ? undefined : () => move(card)}
-                        >
-                            {desc.gameState === GameStates.BLINDTRADE ? <img src={backCard} alt=""/> :
-                                <CardImage card={card}/>}
-                        </div>
-                    )
-                }
-            </div>
+                <div className="roomInfo">
+                    <div className={`myAction myAction--${desc.myAction}`}>
+                        {
+                            desc.myAction === 'raise' ? 'Поднял' : desc.myAction === 'call' ? 'Уровнял' : desc.myAction === 'allIn' ? 'Ва-банк' : desc.myAction === 'round' ? 'Раунд' : null
+                         }
+                    </div>
+                    <div className="myCoins">
+                        <span className="myCoins__value">{desc.myCoins}</span>
+                        <img className="myCoins__icon" src={coin} alt=""/>
+                    </div>
+                </div>
 
-            <TradeModalComponent
-                gameState={desc.gameState}
-                minRaise={minRaise}
-                maxRaise={maxRaise}
-                inputValue={inputValue}
-                setInputValue={setInputValue}
-                myCoins={desc.myCoins}
-                myBet={desc.myBet}
-                active={(desc.gameState === GameStates.TRADE || desc.gameState === GameStates.BLINDTRADE) && desc.isMyMove}
-                bet={bet}
-                minBet={minBet}
-                step={step}
-                canUpBet={canUpBet}
-                canCallBet={canCallBet}
-                descBet={descBet}
-            />
-        </div>
+                <div
+                    className={`myCards ${((desc.gameState === GameStates.TRADE || desc.gameState === GameStates.BLINDTRADE) && desc.isMyMove) || (desc.gameState === GameStates.ROUND && !desc.isMyMove) ? 'myCards__inactive' : ''}`}>
+                    {
+                        desc.myCards?.map((card: ICard) =>
+                            <div
+                                className={`myCards__card ${!card.canMove ? 'myCards__card--inactive' : ''}`}
+                                key={card.suit + card.value}
+                                onClick={desc.gameState === GameStates.TRADE || desc.gameState === GameStates.BLINDTRADE || !card.canMove ? undefined : () => move(card)}
+                            >
+                                {desc.gameState === GameStates.BLINDTRADE ? <img src={backCard} alt=""/> :
+                                    <CardImage card={card}/>}
+                            </div>
+                        )
+                    }
+                </div>
+
+                <TradeModalComponent
+                    gameState={desc.gameState}
+                    minRaise={minRaise}
+                    maxRaise={maxRaise}
+                    inputValue={inputValue}
+                    setInputValue={setInputValue}
+                    myCoins={desc.myCoins}
+                    myBet={desc.myBet}
+                    active={(desc.gameState === GameStates.TRADE || desc.gameState === GameStates.BLINDTRADE) && desc.isMyMove}
+                    bet={bet}
+                    minBet={minBet}
+                    step={step}
+                    canUpBet={canUpBet}
+                    canCallBet={canCallBet}
+                    descBet={descBet}
+                />
+            </div>
+        </>
     );
 };
 
