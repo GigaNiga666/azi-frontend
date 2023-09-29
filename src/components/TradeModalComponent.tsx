@@ -1,6 +1,6 @@
-import React, {FC, useRef} from 'react';
+import React, {FC, ReactChild, ReactChildren, useRef} from 'react';
 import {GameStates} from "../types/GameStates";
-import {Direction, getTrackBackground, Range} from "react-range";
+import {Direction, Range} from "react-range";
 
 interface TradeModalComponentProps {
     minRaise : number,
@@ -17,9 +17,10 @@ interface TradeModalComponentProps {
     canUpBet : boolean,
     canCallBet : boolean,
     descBet : number,
+    children : ReactChild
 }
 
-const TradeModalComponent: FC<TradeModalComponentProps> = ({descBet, canCallBet,canUpBet,gameState ,step,inputValue,setInputValue,myCoins,maxRaise,minRaise,myBet, active, bet, minBet}) => {
+const TradeModalComponent: FC<TradeModalComponentProps> = ({children,descBet, canCallBet,canUpBet,gameState ,step,inputValue,setInputValue,myCoins,maxRaise,minRaise,myBet, active, bet, minBet}) => {
 
     const input = useRef<HTMLInputElement>(null);
     const inputMinValue = canCallBet ? minRaise - step : minRaise;
@@ -31,7 +32,7 @@ const TradeModalComponent: FC<TradeModalComponentProps> = ({descBet, canCallBet,
 
     return (
 
-        <div className={`tradeModal ${active ? 'tradeModal--active' : ''}`}>
+        <div className={`tradeModal ${!active ? 'tradeModal--active' : ''}`}>
             <div className='tradeModal__window'>
                 {canUpBet ? <div className="tradeModal__input">
                     <Range
@@ -78,6 +79,8 @@ const TradeModalComponent: FC<TradeModalComponentProps> = ({descBet, canCallBet,
                         )}
                     />
                 </div> : null}
+
+                {children}
 
                 <div className='tradeModal__buttons'>
                     <button onClick={() => click(0, 'pass')} className='tradeModal__btn tradeModal__btn--red'>Сбросить</button>

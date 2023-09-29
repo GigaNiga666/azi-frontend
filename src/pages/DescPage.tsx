@@ -10,6 +10,7 @@ import {PlayerComponent} from "../components/PlayerComponent";
 import {CardImage} from "../ui/CardImage";
 import {GameStates} from "../types/GameStates";
 import {TradeModalComponent} from "../components/TradeModalComponent";
+import {Timer} from "../components/Timer";
 
 interface IDesc {
     players: IPlayer[],
@@ -41,6 +42,10 @@ const DescPage = () => {
     const [canCallBet, setCanCallBet] = useState<boolean>(true)
     const [descBet, setDescBet] = useState<number>(0)
     const [inputValue, setInputValue] = useState<number>(minBetQuery)
+    const [restartTimer, setRestartTimer] = useState<Function>(() => null)
+    const [stopTimer, setStopTimer] = useState<Function>(() => null)
+    
+    
 
     const [socket, setSocket] = useState<Socket | null>(null)
 
@@ -67,31 +72,9 @@ const DescPage = () => {
 
     useEffect(() => {
         let socketIO = io('https://azi-backend.onrender.com')
-
-        setSocket(socketIO)
-
         socketIO.emit('playerConnect', sessionId, username, coins, minBetQuery, tg.initDataUnsafe.query_id)
 
-        socketIO.on('error', error => console.log(error))
-
-        socketIO.on('newPlayerJoin', newPlayerJoinHandler)
-
-        socketIO.on('cardHandout', cardHandoutHandler)
-
-        socketIO.on('bet', betHandler)
-
-        socketIO.on('tradeEnd', tradeEndHandler)
-
-        socketIO.on('blindTradeEnd', blindTradeEndHandler)
-
-        socketIO.on('move', moveHandler)
-
-        socketIO.on('roundEnd', roundEndHandler)
-
-        socketIO.on('playerLeave', (players : IPlayer[]) => {
-            initPlayers(players)
-        })
-
+        setSocket(socketIO)
 
         tg.onEvent('viewportChanged', () => {
             if (!tg.isExpanded) tg.expand()
@@ -106,6 +89,31 @@ const DescPage = () => {
         }
 
     }, [])
+
+    useEffect(() => {
+        if (socket) {
+
+            socket.on('error', error => console.log(error))
+
+            socket.on('newPlayerJoin', newPlayerJoinHandler)
+
+            socket.on('cardHandout', cardHandoutHandler)
+
+            socket.on('bet', betHandler)
+
+            socket.on('tradeEnd', tradeEndHandler)
+
+            socket.on('blindTradeEnd', blindTradeEndHandler)
+
+            socket.on('move', moveHandler)
+
+            socket.on('roundEnd', roundEndHandler)
+
+            socket.on('playerLeave', (players : IPlayer[]) => {
+                initPlayers(players)
+            })
+        }
+    }, [restartTimer, stopTimer])
 
     function blindTradeEndHandler(players: IPlayer[], bank: number, descBet : number) {
         const me = initPlayers(players)
@@ -223,6 +231,8 @@ const DescPage = () => {
 
         const me = players.filter(player => queryId === player.queryId)[0]
 
+        if (me.move) restartTimer()
+
         updateDesc({isMyMove: me.move, players: sortedPlayers, myCoins: me.coins, myBet: me.bet, myCards: me.cards, myAction : me.action})
         return me
     }
@@ -249,10 +259,12 @@ const DescPage = () => {
 
     function move(card: ICard) {
         socket?.emit('move', card, sessionId)
+        stopTimer()
     }
 
     function bet(betValue: number, action: string) {
         socket?.emit('bet', betValue, action, sessionId)
+        stopTimer()
     }
 
     return (
@@ -324,8 +336,9 @@ const DescPage = () => {
                     step={step}
                     canUpBet={canUpBet}
                     canCallBet={canCallBet}
-                    descBet={descBet}
-                />
+                    descBet={descBet}>
+                    <Timer restartTimerFun={setRestartTimer} stopTimerFun={setStopTimer}/>
+                </TradeModalComponent>
             </div>
         </>
     );
