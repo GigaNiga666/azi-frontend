@@ -32,7 +32,7 @@ const TradeModalComponent: FC<TradeModalComponentProps> = ({children,descBet, ca
 
     return (
 
-        <div className={`tradeModal ${!active ? 'tradeModal--active' : ''}`}>
+        <div className={`tradeModal ${active ? 'tradeModal--active' : ''}`}>
             <div className='tradeModal__window'>
                 {canUpBet ? <div className="tradeModal__input">
                     <Range
