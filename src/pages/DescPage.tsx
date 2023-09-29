@@ -310,6 +310,8 @@ const DescPage = () => {
                         )
                     }
                 </div>
+                
+                <Timer active={desc.isMyMove}/>
 
                 <TradeModalComponent
                     gameState={desc.gameState}

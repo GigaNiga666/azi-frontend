@@ -1,17 +1,21 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 
 interface TimerProps {
-    restartTimerFun : Function,
-    stopTimerFun : Function
+    active : boolean
 }
 
-const Timer: FC<TimerProps> = ({restartTimerFun, stopTimerFun}) => {
+const Timer: FC<TimerProps> = ({active}) => {
 
     const startValue = '20'
 
     const Ref = useRef<NodeJS.Timer>(null);
 
     const [timer, setTimer] = useState('0');
+
+    useEffect(() => {
+        if (active) restartTimer(getDeadTime() + startValue)
+        else stopTimer()
+    }, [active])
 
     const getTimeRemaining = (e :string) => {
         const total = Date.parse(e) - Date.parse(String(new Date()));
@@ -58,8 +62,7 @@ const Timer: FC<TimerProps> = ({restartTimerFun, stopTimerFun}) => {
     }
 
     useEffect(() => {
-        restartTimerFun(() => restartTimer(String(getDeadTime())))
-        stopTimerFun(() => stopTimer())
+
     }, []);
 
 
