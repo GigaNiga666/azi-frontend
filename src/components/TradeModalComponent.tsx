@@ -17,10 +17,9 @@ interface TradeModalComponentProps {
     canUpBet : boolean,
     canCallBet : boolean,
     descBet : number,
-    children : ReactChild
 }
 
-const TradeModalComponent: FC<TradeModalComponentProps> = ({children,descBet, canCallBet,canUpBet,gameState ,step,inputValue,setInputValue,myCoins,maxRaise,minRaise,myBet, active, bet, minBet}) => {
+const TradeModalComponent: FC<TradeModalComponentProps> = ({descBet, canCallBet,canUpBet,gameState ,step,inputValue,setInputValue,myCoins,maxRaise,minRaise,myBet, active, bet, minBet}) => {
 
     const input = useRef<HTMLInputElement>(null);
     const inputMinValue = canCallBet ? minRaise - step : minRaise;
@@ -53,7 +52,6 @@ const TradeModalComponent: FC<TradeModalComponentProps> = ({children,descBet, ca
                                     background: `linear-gradient(to top, rgba(0,0,0,0) ${(inputValue - inputMinValue) / (maxRaise - inputMinValue) * 100}%, #0B0B0E ${(inputValue - inputMinValue) / (maxRaise - inputMinValue) * 100}%), linear-gradient(180deg, #FF6B00 -0.09%, rgba(255, 107, 0, 0.00) 100.12%), linear-gradient(180deg, #EBC57A -157.14%, #E29A0C 309.52%)`
                                 }}
                             >
-                                {children}
                             </div>
                         )}
                         renderThumb={({props, isDragged}) => (
@@ -79,8 +77,6 @@ const TradeModalComponent: FC<TradeModalComponentProps> = ({children,descBet, ca
                         )}
                     />
                 </div> : null}
-
-                {children}
 
                 <div className='tradeModal__buttons'>
                     <button onClick={() => click(0, 'pass')} className='tradeModal__btn tradeModal__btn--red'>Сбросить</button>

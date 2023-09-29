@@ -333,9 +333,7 @@ const DescPage = () => {
                     step={step}
                     canUpBet={canUpBet}
                     canCallBet={canCallBet}
-                    descBet={descBet}>
-                    <Timer restartTimerFun={setRestartTimer} stopTimerFun={setStopTimer}/>
-                </TradeModalComponent>
+                    descBet={descBet}/>
             </div>
         </>
     );
