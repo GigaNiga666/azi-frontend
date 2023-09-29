@@ -42,10 +42,6 @@ const DescPage = () => {
     const [canCallBet, setCanCallBet] = useState<boolean>(true)
     const [descBet, setDescBet] = useState<number>(0)
     const [inputValue, setInputValue] = useState<number>(minBetQuery)
-    const [restartTimer, setRestartTimer] = useState<Function>(() => null)
-    const [stopTimer, setStopTimer] = useState<Function>(() => null)
-    
-    
 
     const [socket, setSocket] = useState<Socket | null>(null)
 
@@ -228,8 +224,6 @@ const DescPage = () => {
 
         const me = players.filter(player => queryId === player.queryId)[0]
 
-        if (me.move) restartTimer()
-
         updateDesc({isMyMove: me.move, players: sortedPlayers, myCoins: me.coins, myBet: me.bet, myCards: me.cards, myAction : me.action})
         return me
     }
@@ -256,12 +250,10 @@ const DescPage = () => {
 
     function move(card: ICard) {
         socket?.emit('move', card, sessionId)
-        stopTimer()
     }
 
     function bet(betValue: number, action: string) {
         socket?.emit('bet', betValue, action, sessionId)
-        stopTimer()
     }
 
     return (
