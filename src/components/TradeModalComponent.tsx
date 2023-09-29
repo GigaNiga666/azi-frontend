@@ -1,6 +1,6 @@
-import React, {FC, ReactChild, ReactChildren, useRef} from 'react';
+import React, {FC, useRef} from 'react';
 import {GameStates} from "../types/GameStates";
-import {Direction, Range} from "react-range";
+import {Direction, getTrackBackground, Range} from "react-range";
 
 interface TradeModalComponentProps {
     minRaise : number,
@@ -52,6 +52,7 @@ const TradeModalComponent: FC<TradeModalComponentProps> = ({descBet, canCallBet,
                                     background: `linear-gradient(to top, rgba(0,0,0,0) ${(inputValue - inputMinValue) / (maxRaise - inputMinValue) * 100}%, #0B0B0E ${(inputValue - inputMinValue) / (maxRaise - inputMinValue) * 100}%), linear-gradient(180deg, #FF6B00 -0.09%, rgba(255, 107, 0, 0.00) 100.12%), linear-gradient(180deg, #EBC57A -157.14%, #E29A0C 309.52%)`
                                 }}
                             >
+                                {children}
                             </div>
                         )}
                         renderThumb={({props, isDragged}) => (
