@@ -13,10 +13,19 @@ const Timer: FC<TimerProps> = ({active,players}) => {
     const Ref = useRef<NodeJS.Timer>(null);
 
     const [timer, setTimer] = useState('0');
+    const [timerIsWork, setTimerIsWork] = useState<boolean>(false)
+
 
     useEffect(() => {
-        restartTimer(getDeadTime() + startValue)
-        if (!active) stopTimer()
+
+        if (active && !timerIsWork) {
+            setTimerIsWork(true)
+            restartTimer(getDeadTime() + startValue)
+        }
+        else if (!timerIsWork) {
+            stopTimer()
+        }
+
     }, [players])
 
     const getTimeRemaining = (e :string) => {
