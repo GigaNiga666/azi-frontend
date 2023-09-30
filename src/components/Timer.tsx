@@ -1,10 +1,12 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
+import {IPlayer} from "../types/Player";
 
 interface TimerProps {
-    active : boolean
+    active : boolean,
+    players : IPlayer[]
 }
 
-const Timer: FC<TimerProps> = ({active}) => {
+const Timer: FC<TimerProps> = ({active,players}) => {
 
     const startValue = '20'
 
@@ -13,9 +15,9 @@ const Timer: FC<TimerProps> = ({active}) => {
     const [timer, setTimer] = useState('0');
 
     useEffect(() => {
-        if (active) restartTimer(getDeadTime() + startValue)
-        else stopTimer()
-    }, [active])
+        restartTimer(getDeadTime() + startValue)
+        if (!active) stopTimer()
+    }, [players])
 
     const getTimeRemaining = (e :string) => {
         const total = Date.parse(e) - Date.parse(String(new Date()));
