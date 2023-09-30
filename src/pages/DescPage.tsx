@@ -250,10 +250,12 @@ const DescPage = () => {
 
     function move(card: ICard) {
         socket?.emit('move', card, sessionId)
+        updateDesc({isMyMove : false})
     }
 
     function bet(betValue: number, action: string) {
         socket?.emit('bet', betValue, action, sessionId)
+        updateDesc({isMyMove : false})
     }
 
     return (

@@ -13,12 +13,9 @@ const Timer: FC<TimerProps> = ({active,players}) => {
     const Ref = useRef<number>(null);
 
     const [timer, setTimer] = useState('0');
-    const [prevActive, setPrevActive] = useState<boolean>(false)
 
 
     useEffect(() => {
-
-        if (prevActive === active) return
 
         if (active) {
             restartTimer(getDeadTime() + startValue)
@@ -27,9 +24,7 @@ const Timer: FC<TimerProps> = ({active,players}) => {
             stopTimer()
         }
 
-        setPrevActive(active)
-
-    }, [players])
+    }, [active])
 
     const getTimeRemaining = (e :string) => {
         const total = Date.parse(e) - Date.parse(String(new Date()));
@@ -83,7 +78,6 @@ const Timer: FC<TimerProps> = ({active,players}) => {
     return (
         <div className="timer">
             <span>{timer}</span>
-            <button onClick={() => stopTimer()}>click</button>
         </div>
     )
 };
