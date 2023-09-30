@@ -10,21 +10,24 @@ const Timer: FC<TimerProps> = ({active,players}) => {
 
     const startValue = '20'
 
-    const Ref = useRef<NodeJS.Timer>(null);
+    const Ref = useRef<number>(null);
 
     const [timer, setTimer] = useState('0');
-    const [timerIsWork, setTimerIsWork] = useState<boolean>(false)
+    const [prevActive, setPrevActive] = useState<boolean>(false)
 
 
     useEffect(() => {
 
-        if (active && !timerIsWork) {
-            setTimerIsWork(true)
+        if (prevActive === active) return
+
+        if (active) {
             restartTimer(getDeadTime() + startValue)
         }
-        else if (!timerIsWork) {
+        else {
             stopTimer()
         }
+
+        setPrevActive(active)
 
     }, [players])
 
@@ -62,7 +65,7 @@ const Timer: FC<TimerProps> = ({active,players}) => {
     }
 
     const stopTimer = () => {
-        if (Ref.current) clearInterval(Ref.current);
+        if (Ref.current) clearInterval(Ref.current)
     }
 
     const getDeadTime = () => {
@@ -80,6 +83,7 @@ const Timer: FC<TimerProps> = ({active,players}) => {
     return (
         <div className="timer">
             <span>{timer}</span>
+            <button onClick={() => stopTimer()}>click</button>
         </div>
     )
 };
