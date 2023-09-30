@@ -1,6 +1,7 @@
 import React, {FC, useRef} from 'react';
 import {GameStates} from "../types/GameStates";
 import {Direction, getTrackBackground, Range} from "react-range";
+import {Timer} from "./Timer";
 
 interface TradeModalComponentProps {
     minRaise : number,
@@ -78,6 +79,8 @@ const TradeModalComponent: FC<TradeModalComponentProps> = ({descBet, canCallBet,
                         )}
                     />
                 </div> : null}
+
+                <Timer active={active}/>
 
                 <div className='tradeModal__buttons'>
                     <button onClick={() => click(0, 'pass')} className='tradeModal__btn tradeModal__btn--red'>Сбросить</button>

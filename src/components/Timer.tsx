@@ -1,12 +1,10 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
-import {IPlayer} from "../types/Player";
 
 interface TimerProps {
     active : boolean,
-    players : IPlayer[]
 }
 
-const Timer: FC<TimerProps> = ({active,players}) => {
+const Timer: FC<TimerProps> = ({active}) => {
 
     const startValue = '20'
 
