@@ -8,7 +8,7 @@
   overflow: hidden;
 
   &__inactive {
-    transform: translate(-50%, 16px) scale(0.8);
+    transform: translate(-50%, 13px) scale(0.6);
     filter: brightness(50%);
     pointer-events: none;
   }
@@ -79,5 +79,9 @@
 @media (min-height: 610px) {
   .myMovedCard {
     bottom: -65px;
+  }
+
+  .myCards__inactive {
+    transform: translate(-50%, 16px) scale(0.8);
   }
 }
