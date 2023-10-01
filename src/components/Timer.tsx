@@ -58,6 +58,7 @@ const Timer: FC<TimerProps> = ({active}) => {
 
     const restartTimer = (e : string) => {
         if (timerCircle.current) {
+            timerCircle.current.setAttribute("stroke-dasharray", '283 283')
             timerCircle.current.style.display = 'block'
         }
 
