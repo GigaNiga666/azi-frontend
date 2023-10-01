@@ -67,6 +67,9 @@ const DescPage = () => {
     window.scrollTo(0, document.body.scrollHeight);
 
     useEffect(() => {
+
+        tg.showAlert(queryId)
+
         let socketIO = io('https://azi-backend.onrender.com')
 
         socketIO.emit('playerConnect', sessionId, username, coins, minBetQuery, tg.initDataUnsafe.query_id)
