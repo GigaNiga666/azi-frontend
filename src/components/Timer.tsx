@@ -84,9 +84,9 @@ const Timer: FC<TimerProps> = ({active}) => {
         return deadline;
     }
 
-    useEffect(() => {
-        restartTimer(getDeadTime() + startValue)
-    }, []);
+    // useEffect(() => {
+    //     restartTimer(getDeadTime() + startValue)
+    // }, []);
 
 
     return (
