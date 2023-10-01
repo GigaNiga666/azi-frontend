@@ -58,7 +58,6 @@ const Timer: FC<TimerProps> = ({active}) => {
 
     const restartTimer = (e : string) => {
         if (timerCircle.current) {
-            timerCircle.current.setAttribute("stroke-dasharray", '283 283')
             timerCircle.current.style.display = 'block'
         }
 
@@ -84,15 +83,19 @@ const Timer: FC<TimerProps> = ({active}) => {
         return deadline;
     }
 
-    // useEffect(() => {
-    //     restartTimer(getDeadTime() + startValue)
-    // }, []);
+    useEffect(() => {
+        restartTimer(getDeadTime() + startValue)
+    }, []);
 
 
     return (
         <div className="timer">
             <svg className="timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <g>
+                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor='#EBC57A' />
+                        <stop offset="100%" stopColor='#E29A0C'  />
+                    </linearGradient>
                     <path
                         ref={timerCircle}
                         stroke-dasharray="283"
