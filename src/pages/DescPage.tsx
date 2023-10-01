@@ -73,7 +73,7 @@ const DescPage = () => {
 
         socketIO.on('error', error => console.log(error))
 
-        socketIO.on('newPlayerJoin', newPlayerJoinHandler)
+        socketIO.on('updatePlayers', updatePlayers)
 
         socketIO.on('cardHandout', cardHandoutHandler)
 
@@ -208,7 +208,7 @@ const DescPage = () => {
             updateDesc({myCards: myCards})
     }
 
-    function newPlayerJoinHandler(players: IPlayer[], trumpedCard: ICard | null) {
+    function updatePlayers(players: IPlayer[], trumpedCard: ICard | null) {
         initPlayers(players)
         if (trumpedCard) updateDesc({trumpedCard})
     }

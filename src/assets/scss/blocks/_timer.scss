@@ -2,7 +2,7 @@
   position: relative;
   height: 48px;
   width: 48px;
-  margin: 0 auto 22px;
+  margin: 0 auto 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,20 +17,25 @@
   span {
     font-weight: 700;
     line-height: 1.6rem;
+    position: relative;
+    z-index: 10;
     font-size: 1.6rem;
   }
 }
 
 .timer__circle {
-  fill: none;
+  color: red;
+  stroke-width: 7px;
+  stroke-linecap: round;
+  stroke: currentColor;
+  transform: rotate(-90deg) scale(-1);
+  transform-origin: center;
+  transition: all 1s linear;
 }
 
-.timer__path-remaining {
-  fill: none;
-  transition: all 1s linear;
-  stroke-width: 8px;
-  stroke-linecap: round;
-  transform: rotate(90deg);
-  transform-origin: center;
-  stroke: url(#grad1);
+
+@media (min-height: 610px) {
+  .timer {
+    margin-bottom: 22px;
+  }
 }

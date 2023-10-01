@@ -9,18 +9,17 @@ const Timer: FC<TimerProps> = ({active}) => {
     const startValue = '20'
 
     const Ref = useRef<number>(null);
+    const timerCircle = useRef<SVGPathElement>(null)
 
     const [timer, setTimer] = useState('0');
 
 
     useEffect(() => {
 
-        if (active) {
+        if (active)
             restartTimer(getDeadTime() + startValue)
-        }
-        else {
+        else
             stopTimer()
-        }
 
     }, [active])
 
@@ -35,6 +34,14 @@ const Timer: FC<TimerProps> = ({active}) => {
     const startTimer = (e : string) => {
         let {total, seconds}
             = getTimeRemaining(e);
+
+        const circleDasharray = `${(
+            calculateTimeFraction(seconds) * 283
+        ).toFixed(0)} 283`;
+
+        if (timerCircle.current && total > 0) timerCircle.current.setAttribute("stroke-dasharray", circleDasharray)
+        else if (timerCircle.current) timerCircle.current.style.display = 'none'
+
         if (total >= 0) {
             setTimer(String(seconds))
         }
@@ -42,6 +49,11 @@ const Timer: FC<TimerProps> = ({active}) => {
             if (Ref.current) clearInterval(Ref.current);
             console.log('Время закончилось')
         }
+    }
+
+    function calculateTimeFraction(total : number) {
+        const rawTimeFraction = +total / +startValue;
+        return rawTimeFraction - (1 / +startValue) * (1 - rawTimeFraction);
     }
 
     const restartTimer = (e : string) => {
@@ -69,12 +81,27 @@ const Timer: FC<TimerProps> = ({active}) => {
     }
 
     useEffect(() => {
-
+        restartTimer(getDeadTime() + startValue)
     }, []);
 
 
     return (
         <div className="timer">
+            <svg className="timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                    <path
+                        ref={timerCircle}
+                        stroke-dasharray="283"
+                        className="timer__circle"
+                        d="
+                          M 50, 50
+                          m -45, 0
+                          a 45,45 0 1,0 90,0
+                          a 45,45 0 1,0 -90,0
+                        "
+                    />
+                </g>
+            </svg>
             <span>{timer}</span>
         </div>
     )
