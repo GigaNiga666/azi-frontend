@@ -25,9 +25,23 @@
   }
 
   &__img {
-    width: 60px;
-    height: 60px;
+    position: relative;
+    overflow: hidden;
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
     margin-bottom: 0.2rem;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+      border-radius:  50%;
+      border: 3px solid #071806;
+    }
+
+    &.border img {
+      border: 5px solid #071806;
+    }
   }
 
   &__name {

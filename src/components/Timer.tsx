@@ -2,11 +2,12 @@ import React, {FC, useEffect, useRef, useState} from 'react';
 
 interface TimerProps {
     active : boolean,
+    style? : string
 }
 
-const Timer: FC<TimerProps> = ({active}) => {
+const Timer: FC<TimerProps> = ({active, style}) => {
 
-    const startValue = '20'
+    const TIME_LIMIT = '20'
 
     const Ref = useRef<number>(null);
     const timerCircle = useRef<SVGPathElement>(null)
@@ -17,7 +18,7 @@ const Timer: FC<TimerProps> = ({active}) => {
     useEffect(() => {
 
         if (active)
-            restartTimer(getDeadTime() + startValue)
+            restartTimer(getDeadTime() + TIME_LIMIT)
         else
             stopTimer()
 
@@ -52,8 +53,8 @@ const Timer: FC<TimerProps> = ({active}) => {
     }
 
     function calculateTimeFraction(total : number) {
-        const rawTimeFraction = +total / +startValue;
-        return rawTimeFraction - (1 / +startValue) * (1 - rawTimeFraction);
+        const rawTimeFraction = +total / +TIME_LIMIT;
+        return rawTimeFraction - (1 / +TIME_LIMIT) * (1 - rawTimeFraction);
     }
 
     const restartTimer = (e : string) => {
@@ -62,7 +63,7 @@ const Timer: FC<TimerProps> = ({active}) => {
             timerCircle.current.style.display = 'block'
         }
 
-        setTimer(startValue);
+        setTimer(TIME_LIMIT);
 
         if (Ref.current) clearInterval(Ref.current);
         const id = setInterval(() => {
@@ -80,17 +81,17 @@ const Timer: FC<TimerProps> = ({active}) => {
     const getDeadTime = () => {
         let deadline = new Date();
 
-        deadline.setSeconds(deadline.getSeconds() + +startValue);
+        deadline.setSeconds(deadline.getSeconds() + +TIME_LIMIT);
         return deadline;
     }
 
     useEffect(() => {
-        restartTimer(getDeadTime() + startValue)
+        restartTimer(getDeadTime() + TIME_LIMIT)
     }, []);
 
 
     return (
-        <div className="timer">
+        <div className={`timer ${style || ''}`}>
             <svg className="timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <g>
                     <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">

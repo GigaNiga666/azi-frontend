@@ -5,7 +5,7 @@ export interface IPlayer {
     coins : number,
     id : string,
     cards : ICard[],
-    movedCard : ICard,
+    movedCard : ICard | null,
     move : boolean,
     active : boolean,
     payoff : number,

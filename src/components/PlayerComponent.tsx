@@ -1,10 +1,11 @@
 import React, {FC} from 'react';
-import playerLogo from '../assets/images/playerImage.png'
+import playerLogo from '../assets/images/playerImage2.jpg'
 import addPlayer from '../assets/images/addPlayer.svg'
 import coins from '../assets/images/icons/coins.svg'
 import {IPlayer} from "../types/Player";
 import {CardImage} from "../ui/CardImage";
 import backCard from '../assets/images/backCard.svg'
+import {Timer} from "./Timer";
 
 interface PlayerComponentProps {
     player : IPlayer,
@@ -34,7 +35,10 @@ const PlayerComponent: FC<PlayerComponentProps> = ({player,position, inverse}) =
 
     return (
         <div className={`player ${!player.active ? 'player__inactive' : ''}`}>
-            <img className='player__img' src={playerLogo} alt="playerImage"/>
+            <div className={`player__img ${player.move ? 'border' : ''}`}>
+                <img src={playerLogo} alt="playerImage"/>
+                <Timer active={player.move} style={'timer__player'}/>
+            </div>
             <span className="player__name">{player.username}</span>
             <div className="player__coins">
                 <span className="player__coins-value">{player.coins}</span>
