@@ -10,6 +10,7 @@ import {PlayerComponent} from "../components/PlayerComponent";
 import {CardImage} from "../ui/CardImage";
 import {GameStates} from "../types/GameStates";
 import {TradeModalComponent} from "../components/TradeModalComponent";
+import {Timer} from "../components/Timer";
 
 interface IDesc {
     players: IPlayer[],
@@ -283,6 +284,8 @@ const DescPage = () => {
                     </div>
                     <PlayerComponent inverse={true} position={'top-left'} player={desc.players[4]}/>
                 </div>
+
+                {desc.gamePhase === 'round' && desc.isMyMove ? <Timer active={desc.isMyMove}/> : null}
 
                 <div className="roomInfo">
                     <div className={`myAction myAction--${desc.myAction}`}>

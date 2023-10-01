@@ -12,7 +12,7 @@
   }
 
   &__window {
-    padding-bottom: 103px;
+    padding-bottom: 90px;
   }
 
   &__timer {
@@ -67,5 +67,11 @@
 
   #thumb:focus-visible {
     outline: none;
+  }
+}
+
+@media (min-height : 610px) {
+  .tradeModal__window {
+    padding-bottom: 103px;
   }
 }
