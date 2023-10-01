@@ -49,7 +49,7 @@ const DescPage = () => {
 
     const initValues: IDesc = {
         players: [],
-        myCards: [],
+        myCards: [{suit : Suits.SPADES, value : 10}, {suit : Suits.SPADES, value : 10}, {suit : Suits.SPADES, value : 10}],
         myMovedCard: null,
         myCoins: coins,
         trumpedCard: null,

@@ -5,7 +5,7 @@
   bottom: 0;
   left: 50%;
   overflow: hidden;
-  transform: scale(0.9);
+  transform: translate(-50%, 20px) scale(0.9);
 
   &__inactive {
     transform: translate(-50%, 13px) scale(0.6);
