@@ -85,10 +85,6 @@ const Timer: FC<TimerProps> = ({active, style}) => {
         return deadline;
     }
 
-    useEffect(() => {
-        restartTimer(getDeadTime() + TIME_LIMIT)
-    }, []);
-
 
     return (
         <div className={`timer ${style || ''}`}>

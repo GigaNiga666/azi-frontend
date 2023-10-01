@@ -37,7 +37,7 @@ const PlayerComponent: FC<PlayerComponentProps> = ({player,position, inverse}) =
         <div className={`player ${!player.active ? 'player__inactive' : ''}`}>
             <div className={`player__img ${player.move ? 'border' : ''}`}>
                 <img src={playerLogo} alt="playerImage"/>
-                <Timer active={player.move} style={'timer__player'}/>
+                {player.move ? <Timer active={player.move} style={'timer__player'}/> : null}
             </div>
             <span className="player__name">{player.username}</span>
             <div className="player__coins">
