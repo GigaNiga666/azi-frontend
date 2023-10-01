@@ -48,7 +48,7 @@ const Timer: FC<TimerProps> = ({active, style}) => {
         }
         else {
             if (Ref.current) clearInterval(Ref.current);
-            console.log('Время закончилось')
+            if (!style) console.log('Время закончилось')
         }
     }
 
