@@ -285,7 +285,7 @@ const DescPage = () => {
                     <PlayerComponent inverse={true} position={'top-left'} player={desc.players[4]}/>
                 </div>
 
-                {desc.gamePhase === 'round' && desc.isMyMove ? <Timer active={desc.isMyMove}/> : null}
+                {desc.gameState === GameStates.TRADE && desc.isMyMove ? <Timer active={desc.isMyMove}/> : null}
 
                 <div className="roomInfo">
                     <div className={`myAction myAction--${desc.myAction}`}>
