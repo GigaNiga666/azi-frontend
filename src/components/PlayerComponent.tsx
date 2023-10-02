@@ -31,6 +31,8 @@ const PlayerComponent: FC<PlayerComponentProps> = ({player,position, inverse}) =
             break
         case 'round' : action = 'Раунд'
             break
+        case 'win' : action = 'Выигрыш'
+            break
     }
 
     return (

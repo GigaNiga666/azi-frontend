@@ -68,8 +68,6 @@ const DescPage = () => {
 
     useEffect(() => {
 
-        tg.showAlert(queryId)
-
         let socketIO = io('https://azi-backend.onrender.com')
 
         socketIO.emit('playerConnect', sessionId, username, coins, minBetQuery, tg.initDataUnsafe.query_id)
@@ -293,7 +291,7 @@ const DescPage = () => {
                 <div className="roomInfo">
                     <div className={`myAction myAction--${desc.myAction}`}>
                         {
-                            desc.myAction === 'raise' ? 'Поднял' : desc.myAction === 'call' ? 'Уровнял' : desc.myAction === 'allIn' ? 'Ва-банк' : desc.myAction === 'round' ? 'Раунд' : null
+                            desc.myAction === 'raise' ? 'Поднял' : desc.myAction === 'call' ? 'Уровнял' : desc.myAction === 'allIn' ? 'Ва-банк' : desc.myAction === 'round' ? 'Раунд' : desc.myAction === 'win' ? 'Выигрыш' : null
                          }
                     </div>
                     <div className="myCoins">
