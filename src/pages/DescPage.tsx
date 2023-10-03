@@ -232,12 +232,12 @@ const DescPage = () => {
         let sortedPlayers: IPlayer[] = [];
 
         players.forEach((player, index) => {
-            if (username === player.username) {
+            if (queryId === player.queryId) {
                 sortedPlayers = [...players.slice(index + 1), ...players.slice(0, index)]
             }
         })
 
-        const me = players.filter(player => username === player.username)[0]
+        const me = players.filter(player => queryId === player.queryId)[0]
 
         updateDesc({isMyMove: me.move, players: sortedPlayers, myCoins: me.coins, myBet: me.bet, myCards: me.cards, myAction : me.action})
         return me
