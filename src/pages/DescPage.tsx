@@ -33,7 +33,6 @@ const DescPage = () => {
     const coins = Number(searchParams.get('coins'))
     const minBetQuery = Number(searchParams.get('minBet'))
     let step = 10;
-    const navigate = useNavigate()
     let queryId = tg.initDataUnsafe.query_id;
 
 
@@ -72,8 +71,8 @@ const DescPage = () => {
 
     useEffect(() => {
 
-        let socketIO = io('http://localhost:5000')
-        // let socketIO = io('https://azi-backend.onrender.com')
+        // let socketIO = io('http://localhost:5000')
+        let socketIO = io('https://azi-backend.onrender.com')
 
         socketIO.emit('playerConnect', sessionId, username, coins, minBetQuery, tg.initDataUnsafe.query_id)
 
@@ -279,7 +278,6 @@ const DescPage = () => {
         <>
             <span className="roomInfo__id">
                 #{sessionId}
-                <button onClick={() => navigate('/')}>click</button>
             </span>
             <div className='desc'>
                 <div className="desc__item">
