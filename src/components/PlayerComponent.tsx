@@ -1,19 +1,20 @@
-import React, {FC} from 'react';
-import playerLogo from '../assets/images/playerImage2.jpg'
+import {FC} from 'react';
+import playerLogo from '../assets/images/playerImage.png'
 import addPlayer from '../assets/images/addPlayer.svg'
 import coins from '../assets/images/icons/coins.svg'
 import {IPlayer} from "../types/Player";
 import {CardImage} from "../ui/CardImage";
 import backCard from '../assets/images/backCard.svg'
-import {Timer} from "./Timer";
+import {PlayerTimer} from "./PlayerTimer";
 
 interface PlayerComponentProps {
     player : IPlayer,
     position : string,
-    inverse? : boolean
+    inverse? : boolean,
+    timer : number
 }
 
-const PlayerComponent: FC<PlayerComponentProps> = ({player,position, inverse}) => {
+const PlayerComponent: FC<PlayerComponentProps> = ({player,position, inverse, timer}) => {
     if (!player) return (
         <div className='player__none'>
             <img className='player__none-img' src={addPlayer} alt=""/>
@@ -35,11 +36,12 @@ const PlayerComponent: FC<PlayerComponentProps> = ({player,position, inverse}) =
             break
     }
 
+
     return (
         <div className={`player ${!player.active ? 'player__inactive' : ''}`}>
             <div className={`player__img ${player.move ? 'border' : ''}`}>
                 <img src={playerLogo} alt="playerImage"/>
-                {player.move ? <Timer active={player.move} style={'timer__player'}/> : null}
+                {player.move && timer > 0 ? <PlayerTimer value={timer}/> : null}
             </div>
             <span className="player__name">{player.username}</span>
             <div className="player__coins">

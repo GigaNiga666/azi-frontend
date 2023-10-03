@@ -1,11 +1,13 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
+import {Socket} from "socket.io-client";
 
 interface TimerProps {
     active : boolean,
-    style? : string
+    socket : Socket | null,
+    sessionId : string
 }
 
-const Timer: FC<TimerProps> = ({active, style}) => {
+const Timer: FC<TimerProps> = ({active, socket, sessionId}) => {
 
     const TIME_LIMIT = '20'
 
@@ -17,10 +19,16 @@ const Timer: FC<TimerProps> = ({active, style}) => {
 
     useEffect(() => {
 
+        console.log('fgfdhd', active)
+
         if (active)
             restartTimer(getDeadTime() + TIME_LIMIT)
-        else
+        else {
+            console.log('timer stop')
             stopTimer()
+        }
+
+        return () => stopTimer()
 
     }, [active])
 
@@ -45,10 +53,11 @@ const Timer: FC<TimerProps> = ({active, style}) => {
 
         if (total >= 0) {
             setTimer(String(seconds))
+            console.log(seconds)
+            socket?.emit('timerUpdate', seconds, sessionId)
         }
         else {
             if (Ref.current) clearInterval(Ref.current);
-            if (!style) console.log('Время закончилось')
         }
     }
 
@@ -87,7 +96,7 @@ const Timer: FC<TimerProps> = ({active, style}) => {
 
 
     return (
-        <div className={`timer ${style || ''}`}>
+        <div className={`timer`}>
             <svg className="timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <g>
                     <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -96,7 +105,7 @@ const Timer: FC<TimerProps> = ({active, style}) => {
                     </linearGradient>
                     <path
                         ref={timerCircle}
-                        stroke-dasharray="283"
+                        strokeDasharray="283"
                         className="timer__circle"
                         d="
                           M 50, 50

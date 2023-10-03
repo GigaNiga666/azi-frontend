@@ -1,6 +1,6 @@
 import React, {useEffect, useReducer, useState} from 'react';
 import {io, Socket} from "socket.io-client";
-import {useParams, useSearchParams} from "react-router-dom";
+import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {Suits} from "../types/Suits";
 import coin from '../assets/images/icons/tenge.svg'
 import backCard from '../assets/images/backCard.svg'
@@ -33,7 +33,9 @@ const DescPage = () => {
     const coins = Number(searchParams.get('coins'))
     const minBetQuery = Number(searchParams.get('minBet'))
     let step = 10;
+    const navigate = useNavigate()
     let queryId = tg.initDataUnsafe.query_id;
+
 
     const [minBet, setMinBet] = useState<number>(minBetQuery)
     const [minRaise, setMinRaise] = useState<number>(minBetQuery)
@@ -46,6 +48,8 @@ const DescPage = () => {
     const [socket, setSocket] = useState<Socket | null>(null)
 
     const [bank, setBank] = useState<number>(0)
+    const [timer, setTimer] = useState<number>(0)
+
 
     const initValues: IDesc = {
         players: [],
@@ -68,7 +72,8 @@ const DescPage = () => {
 
     useEffect(() => {
 
-        let socketIO = io('https://azi-backend.onrender.com')
+        let socketIO = io('http://localhost:5000')
+        // let socketIO = io('https://azi-backend.onrender.com')
 
         socketIO.emit('playerConnect', sessionId, username, coins, minBetQuery, tg.initDataUnsafe.query_id)
 
@@ -87,6 +92,8 @@ const DescPage = () => {
         socketIO.on('move', moveHandler)
 
         socketIO.on('roundEnd', roundEndHandler)
+
+        socketIO.on('timerUpdate', timerUpdate)
 
         socketIO.on('playerLeave', (players : IPlayer[]) => {
             initPlayers(players)
@@ -107,6 +114,12 @@ const DescPage = () => {
         }
 
     }, [])
+
+
+    function timerUpdate(value : number) {
+        setTimer(value)
+        console.log(value, timer)
+    }
 
 
     function blindTradeEndHandler(players: IPlayer[], bank: number, descBet : number) {
@@ -209,8 +222,9 @@ const DescPage = () => {
             updateDesc({myCards: myCards})
     }
 
-    function updatePlayers(players: IPlayer[], trumpedCard: ICard | null) {
+    function updatePlayers(players: IPlayer[], trumpedCard: ICard | null, bank : number) {
         initPlayers(players)
+        if (bank) setBank(bank)
         if (trumpedCard) updateDesc({trumpedCard})
     }
 
@@ -218,12 +232,12 @@ const DescPage = () => {
         let sortedPlayers: IPlayer[] = [];
 
         players.forEach((player, index) => {
-            if (queryId === player.queryId) {
+            if (username === player.username) {
                 sortedPlayers = [...players.slice(index + 1), ...players.slice(0, index)]
             }
         })
 
-        const me = players.filter(player => queryId === player.queryId)[0]
+        const me = players.filter(player => username === player.username)[0]
 
         updateDesc({isMyMove: me.move, players: sortedPlayers, myCoins: me.coins, myBet: me.bet, myCards: me.cards, myAction : me.action})
         return me
@@ -252,30 +266,35 @@ const DescPage = () => {
     function move(card: ICard) {
         socket?.emit('move', card, sessionId)
         updateDesc({isMyMove : false})
+        setTimer(20)
     }
 
     function bet(betValue: number, action: string) {
         socket?.emit('bet', betValue, action, sessionId)
         updateDesc({isMyMove : false})
+        setTimer(20)
     }
 
     return (
         <>
-            <span className="roomInfo__id">#{sessionId}</span>
+            <span className="roomInfo__id">
+                #{sessionId}
+                <button onClick={() => navigate('/')}>click</button>
+            </span>
             <div className='desc'>
                 <div className="desc__item">
-                    <PlayerComponent position={'bottom'} player={desc.players[2]}/>
+                    <PlayerComponent timer={timer} position={'bottom'} player={desc.players[2]}/>
                 </div>
                 <div className="desc__item">
-                    <PlayerComponent position={'bottom-right'} player={desc.players[1]}/>
-                    <PlayerComponent inverse={true} position={'bottom-left'} player={desc.players[3]}/>
+                    <PlayerComponent timer={timer} position={'bottom-right'} player={desc.players[1]}/>
+                    <PlayerComponent timer={timer} inverse={true} position={'bottom-left'} player={desc.players[3]}/>
                 </div>
                 <div className="desc__item desc__item--trumped">
                     {desc.gameState === GameStates.BLINDTRADE ? <img src={backCard} alt=""/> :
                         <CardImage card={desc.trumpedCard}/>}
                 </div>
                 <div className="desc__item">
-                    <PlayerComponent position={'top-right'} player={desc.players[0]}/>
+                    <PlayerComponent timer={timer} position={'top-right'} player={desc.players[0]}/>
                     <div className="bank">
                         <div className="bank__label">Банк</div>
                         <div className="bank__value">{bank}</div>
@@ -283,10 +302,10 @@ const DescPage = () => {
                     <div className="myMovedCard">
                         <CardImage card={desc.myMovedCard}/>
                     </div>
-                    <PlayerComponent inverse={true} position={'top-left'} player={desc.players[4]}/>
+                    <PlayerComponent timer={timer} inverse={true} position={'top-left'} player={desc.players[4]}/>
                 </div>
 
-                {desc.gameState === GameStates.ROUND && desc.isMyMove ? <Timer active={desc.isMyMove}/> : null}
+                {desc.gameState === GameStates.ROUND && desc.isMyMove ? <Timer sessionId={sessionId as string} socket={socket} active={desc.isMyMove}/> : null}
 
                 <div className="roomInfo">
                     <div className={`myAction myAction--${desc.myAction}`}>
@@ -317,6 +336,8 @@ const DescPage = () => {
                 </div>
 
                 <TradeModalComponent
+                    sessionId={sessionId as string}
+                    socket={socket}
                     gameState={desc.gameState}
                     minRaise={minRaise}
                     maxRaise={maxRaise}
