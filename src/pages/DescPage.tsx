@@ -223,7 +223,7 @@ const DescPage = () => {
 
     function updatePlayers(players: IPlayer[], trumpedCard: ICard | null, bank : number) {
         initPlayers(players)
-        if (bank) setBank(bank)
+        if (bank !== undefined) setBank(bank)
         if (trumpedCard) updateDesc({trumpedCard})
     }
 
